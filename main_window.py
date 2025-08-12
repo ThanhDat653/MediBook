@@ -7,13 +7,13 @@ from PyQt6.QtGui import QPixmap, QIcon
 
 from config import Config
 try:
-    from ui.desktop_app_scrollable_ui import Ui_MainWindow
+    from PyQt6 import Ui_MainWindow
 except ImportError:
     pass
 
-from app.models import AnimeDatabase
-from app.widgets.anime import AnimeItemWidget
-from app.widgets.dialog import AddDialog, EditDialog
+from app.models import AppointmentDatabase
+from app.widgets.docter import AppointmentItemWidget
+from app.widgets.dialog import AddAppointmentDialog, EditAppointmentDialog
 
 
 class MainWindow(QMainWindow):
@@ -35,14 +35,14 @@ class MainWindow(QMainWindow):
         widgets = self.ui
 
         global database
-        self.dtb = AnimeDatabase()
+        self.dtb = AppointmentDatabase()
         database = self.dtb
 
         global h_layout 
-        self.horizontal_layout = QHBoxLayout(widgets.animeListWidget)
+        self.horizontal_layout = QHBoxLayout(widgets.appointmentListWidget)
         h_layout = self.horizontal_layout
         h_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.layout = AnimeHorizontalLayout()
+        self.layout = AppointmentHorizontalLayout()
 
         widgets.stackedWidget.setCurrentIndex(Config.HOME_PAGE_INDEX)
         self.setup_leftMenu()
@@ -56,12 +56,12 @@ class MainWindow(QMainWindow):
 
     def setup_CRUD_page(self):
         database.load_data()
-        widgets.animeList.addItems(database.anime_title_list)
-        widgets.animeList.setCurrentRow(0)
-        widgets.addButton.clicked.connect(lambda:AnimeCRUD.add(self))
-        widgets.editButton.clicked.connect(lambda:AnimeCRUD.edit(self))
-        widgets.removeButton.clicked.connect(lambda:AnimeCRUD.delete(self))
-        widgets.searchAnime.clicked.connect(lambda:AnimeCRUD.search(self))
+        widgets.appointmentList.addItems(database.appointment_title_list)
+        widgets.appointmentList.setCurrentRow(0)
+        widgets.addButton.clicked.connect(lambda:AppointmentCRUD.add(self))
+        widgets.editButton.clicked.connect(lambda:AppointmentCRUD.edit(self))
+        widgets.removeButton.clicked.connect(lambda:AppointmentCRUD.delete(self))
+        widgets.searchAppointment.clicked.connect(lambda:AppointmentCRUD.search(self))
 
     def setup_rank_page(self):
         self.layout.display_layout()
@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
         widgets.AtoZButton.clicked.connect(lambda:self.layout.sort_by_alphabet())
 
     def on_searchButton_clicked(self):
-        widgets.stackedWidget.setCurrentIndex(Config.RANK_PAGE_INDEX) #???
+        widgets.stackedWidget.setCurrentIndex(Config.RANK_PAGE_INDEX)
         search_text = widgets.searchInput.text().strip()
 
         if search_text:
@@ -132,59 +132,59 @@ class MainWindow(QMainWindow):
         widgets.toggleButton.setIcon(icon)
 
 
-class AnimeCRUD():
+class AppointmentCRUD():
     def add(self):
-        currIndex = widgets.animeList.currentRow()
-        add_dialog = AddDialog()
+        currIndex = widgets.appointmentList.currentRow()
+        add_dialog = AddAppointmentDialog()
         if add_dialog.exec():
             inputs = add_dialog.return_input_fields()
-            widgets.animeList.insertItem(currIndex, inputs["title"])
+            widgets.appointmentList.insertItem(currIndex, inputs["title"])
             database.add_item_from_dict(inputs)
 
     def edit(self):
-        curr_index = widgets.animeList.currentRow()
-        item = widgets.animeList.item(curr_index)
+        curr_index = widgets.appointmentList.currentRow()
+        item = widgets.appointmentList.item(curr_index)
         item_title = item.text()
         edit_item = database.get_item_by_title(item_title)
         if item is not None:
-            edit_dialog = EditDialog(edit_item)
+            edit_dialog = EditAppointmentDialog(edit_item)
             if edit_dialog.exec():
                 inputs = edit_dialog.return_input_fields()
                 item.setText(inputs["title"])
                 database.edit_item_from_dict(item_title, inputs)
 
     def delete(self):
-        curr_index = widgets.animeList.currentRow()
-        item = widgets.animeList.item(curr_index)
+        curr_index = widgets.appointmentList.currentRow()
+        item = widgets.appointmentList.item(curr_index)
         item_title = item.text()
         if item is None:
             return
-        question = QMessageBox.question(self, "Remove Anime",
-                                        "Do you want to remove this anime?",
+        question = QMessageBox.question(self, "Remove Appointment",
+                                        "Do you want to remove this appointment?",
                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if question == QMessageBox.StandardButton.Yes:
-            item = widgets.animeList.takeItem(curr_index)
+            item = widgets.appointmentList.takeItem(curr_index)
             database.delete_item(item_title)
 
     def search(self):
-        search_anime_field = widgets.inputAnime.text().strip()
-        if search_anime_field:
-            matched_items = widgets.animeList.findItems(search_anime_field, Qt.MatchFlag.MatchContains)
-            for i in range(widgets.animeList.count()):
-                it = widgets.animeList.item(i)
+        search_appointment_field = widgets.inputappointment.text().strip()
+        if search_appointment_field:
+            matched_items = widgets.appointmentList.findItems(search_appointment_field, Qt.MatchFlag.MatchContains)
+            for i in range(widgets.appointmentList.count()):
+                it = widgets.appointmentList.item(i)
                 it.setHidden(it not in matched_items)
         else:
-            for i in range(widgets.animeList.count()):
-                it = widgets.animeList.item(i)
+            for i in range(widgets.appointmentList.count()):
+                it = widgets.appointmentList.item(i)
                 it.setHidden(False)
     
 
-class AnimeHorizontalLayout():
+class AppointmentHorizontalLayout():
     def display_layout(self):
-        for anime in database.anime_item_list:
-            anime_item_widget = AnimeItemWidget(anime)
-            h_layout.addWidget(anime_item_widget)
-        widgets.animeListWidget.setLayout(h_layout)
+        for appointment in database.appointment_item_list:
+            appointment_item_widget = AppointmentItemWidget(appointment)
+            h_layout.addWidget(appointment_item_widget)
+        widgets.appointmentListWidget.setLayout(h_layout)
     
     def clear_layout(self):
         while h_layout.count():
@@ -196,11 +196,11 @@ class AnimeHorizontalLayout():
         self.clear_layout()
         
         if item_list is None:
-            item_list = database.anime_item_list
+            item_list = database.appointment_item_list
         # Update layout from custom item list
-        for anime in item_list:
-            anime_item_widget = AnimeItemWidget(anime)
-            h_layout.addWidget(anime_item_widget)
+        for appointment in item_list:
+            appointment_item_widget = AppointmentItemWidget(appointment)
+            h_layout.addWidget(appointment_item_widget)
 
     def sort_by_rating(self):
         database.sort_item_by_rating()
