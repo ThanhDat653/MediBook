@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AnimeColumn</class>
+ <class>AppointmentColumn</class>
  <widget class="QWidget" name="AppointmentColumn">
   <property name="geometry">
    <rect>

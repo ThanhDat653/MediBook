@@ -507,7 +507,7 @@
                </size>
               </property>
               <property name="placeholderText">
-               <string>Search anime...</string>
+               <string>Search appointment...</string>
               </property>
              </widget>
             </item>
@@ -657,7 +657,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Welcome to Crunchyroll, the world’s largest home for anime!</string>
+                 <string>Welcome to Crunchyroll, the world’s largest home for docter!</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -841,7 +841,7 @@
                 <property name="widgetResizable">
                  <bool>true</bool>
                 </property>
-                <widget class="QWidget" name="animeListWidget">
+                <widget class="QWidget" name="appointmentListWidget">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -918,7 +918,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QPushButton" name="searchAnime">
+               <widget class="QPushButton" name="searchAppointment">
                 <property name="minimumSize">
                  <size>
                   <width>100</width>
@@ -931,7 +931,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="inputAnime"/>
+               <widget class="QLineEdit" name="inputAppointment"/>
               </item>
               <item>
                <widget class="QPushButton" name="addButton">
@@ -976,7 +976,7 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QListWidget" name="animeList"/>
+            <widget class="QListWidget" name="appointmentList"/>
            </item>
           </layout>
          </widget>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add New Anime</string>
+   <string>Add New Appointment</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -80,7 +80,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="releasedateFrame">
+       <widget class="QFrame" name="appointment">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>

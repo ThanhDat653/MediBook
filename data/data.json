@@ -1,6 +1,6 @@
 [
     {
-        "appointment_id": 1,
+        "id": 1,
         "hospital": "Bệnh viện Đa khoa A",
         "doctor": "BS. Nguyễn Văn An",
         "time": "08:30",
@@ -10,7 +10,7 @@
         "link": "https://www.example.com/hospital-a"
     },
     {
-        "appointment_id": 2,
+        "id": 2,
         "hospital": "Bệnh viện Nhi đồng B",
         "doctor": "BS. Trần Thị Hoa",
         "time": "09:00",
@@ -20,7 +20,7 @@
         "link": "https://www.example.com/hospital-b"
     },
     {
-        "appointment_id": 3,
+        "id": 3,
         "hospital": "Bệnh viện Chuyên khoa Tim mạch C",
         "doctor": "PGS.TS. Lê Quang Minh",
         "time": "10:15",
@@ -30,7 +30,7 @@
         "link": "https://www.example.com/hospital-c"
     },
     {
-        "appointment_id": 4,
+        "id": 4,
         "hospital": "Bệnh viện Đa khoa D",
         "doctor": "BS. Phạm Thị Lan",
         "time": "14:00",
@@ -40,7 +40,7 @@
         "link": "https://www.example.com/hospital-d"
     },
     {
-        "appointment_id": 5,
+        "id": 5,
         "hospital": "Bệnh viện Đa khoa A",
         "doctor": "BS. Đỗ Hữu Tài",
         "time": "15:30",
@@ -50,7 +50,7 @@
         "link": "https://www.example.com/hospital-a"
     },
     {
-        "appointment_id": 6,
+        "id": 6,
         "hospital": "Bệnh viện Nhi đồng B",
         "doctor": "BS. Lê Hồng Sơn",
         "time": "08:00",
@@ -60,7 +60,7 @@
         "link": "https://www.example.com/hospital-b"
     },
     {
-        "appointment_id": 7,
+        "id": 7,
         "hospital": "Bệnh viện Chuyên khoa Tim mạch C",
         "doctor": "GS. Nguyễn Văn Hùng",
         "time": "13:45",
@@ -70,7 +70,7 @@
         "link": "https://www.example.com/hospital-c"
     },
     {
-        "appointment_id": 8,
+        "id": 8,
         "hospital": "Bệnh viện Đa khoa D",
         "doctor": "BS. Nguyễn Thị Yến",
         "time": "09:20",
@@ -80,7 +80,7 @@
         "link": "https://www.example.com/hospital-d"
     },
     {
-        "appointment_id": 9,
+        "id": 9,
         "hospital": "Bệnh viện Đa khoa A",
         "doctor": "BS. Vũ Văn Khánh",
         "time": "16:00",
@@ -90,7 +90,7 @@
         "link": "https://www.example.com/hospital-a"
     },
     {
-        "appointment_id": 10,
+        "id": 10,
         "hospital": "Bệnh viện Chuyên khoa Tim mạch C",
         "doctor": "BS. Đặng Thị Thu",
         "time": "11:10",

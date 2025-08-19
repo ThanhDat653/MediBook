@@ -8,56 +8,56 @@ from PyQt6.QtCore import Qt
 
 from config import Config
 try:
-    from ui.doctor_column_ui import Ui_doctorColumn
+    from ui.appointment_column_ui import Ui_AppointmentColumn
 except ImportError:
     pass
 from app.models import AppointmentItem
 
 
 class AppointmentItemWidget(QWidget):
-    STYLE_LOCATION = os.path.join(Config.UI_DIR, "style_doctor.qss")
-    UI_LOCATION = os.path.join(Config.UI_DIR, "doctor_column.ui")
+    STYLE_LOCATION = os.path.join(Config.UI_DIR, "style_appointment.qss")
+    UI_LOCATION = os.path.join(Config.UI_DIR, "appointment_column.ui")
     
-    def __init__(self, doctor: AppointmentItem):
+    def __init__(self, appointment: AppointmentItem):
         super().__init__()  # Use super() instead of QWidget.__init__()
         try:
             self.ui = uic.loadUi(self.UI_LOCATION, self)
         except FileNotFoundError:
-            self.ui = Ui_doctorColumn()
+            self.ui = Ui_AppointmentColumn()
             self.ui.setupUi(self)
 
         with open(self.STYLE_LOCATION, "r") as style_file:
             style_config = style_file.read()
         self.setStyleSheet(style_config)
 
-        self.doctor = doctor
+        self.appointment = appointment
         self.display_description()
 
         # Initialize animation effects
         self.animation = Animation()
-        self.animation.setup_hover_effects(self.ui.doctorCol)
+        self.animation.setup_hover_effects(self.ui.appointmentCol)
         
         # Connect double click event
-        self.ui.doctorCol.mouseDoubleClickEvent = self.handle_double_click
+        self.ui.appointmentCol.mouseDoubleClickEvent = self.handle_double_click
         
-        if self.doctor.link != 'None':
-            self.ui.doctorCol.setToolTip("Double click to view details")
+        if self.appointment.link != 'None':
+            self.ui.appointmentCol.setToolTip("Double click to view details")
 
     def display_description(self):
-        description_text = f"Hospital: {self.doctor.hospital}\n" \
-                          f"Specialty: {self.doctor.specialty}\n" \
-                          f"Rating: {str(self.doctor.rating)}/10"
-        img_pixmap = QPixmap(self.doctor.image)
-        self.ui.doctorName.setText(self.doctor.name)
-        self.ui.doctorInfo.setText(description_text)
-        self.ui.doctorView.setPixmap(img_pixmap.scaled(
-            self.ui.doctorView.size(), 
+        description_text = f"Hospital: {self.appointment.hospital}\n" \
+                          f"Specialty: {self.appointment.date}\n" \
+                          f"Price: {str(self.appointment.price)}/10"
+        img_pixmap = QPixmap(self.appointment.image)
+        self.ui.appointmentTitle.setText(self.appointment.name)
+        self.ui.appointmentInfo.setText(description_text)
+        self.ui.appointmentView.setPixmap(img_pixmap.scaled(
+            self.ui.appointmentView.size(), 
             Qt.AspectRatioMode.KeepAspectRatio,
             Qt.TransformationMode.SmoothTransformation
         ))
 
     def handle_double_click(self, event):
-        self.open_link(self.doctor.link)
+        self.open_link(self.appointment.link)
         event.accept()
 
     def open_link(self, url):
