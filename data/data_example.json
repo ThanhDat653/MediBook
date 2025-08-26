@@ -1,30 +1,34 @@
 [
     {
-        "id": 3,
-        "title": "Mononoke Hime",
-        "release_date": "Jul 1997",
-        "image": "ui/images/mononoke-hime.jpg",
-        "rating": 10.0
+        "name": "Bệnh viện Đa khoa A",
+        "p": 87,
+        "release_date": "8/7",
+        "image": "ui/images/hospital-a.jpg",
+        "rating": 9.5,
+        "link": "None"
     },
     {
         "id": 0,
-        "title": "Sousou no Frieren",
-        "release_date": "Sep 2023",
-        "image": "ui/images/frieren.jpg",
-        "rating": 9.0
+        "title": "Bệnh viện Nhi đồng B",
+        "release_date": "Jan 2020",
+        "image": "ui/images/hospital-b.jpg",
+        "rating": 8.5,
+        "link": "https://www.example.com/hospital-b"
     },
     {
         "id": 2,
-        "title": "One Piece",
-        "release_date": "Oct 1999",
-        "image": "ui/images/one-piece.jpg",
-        "rating": 8.0
+        "title": "Bệnh viện Chuyên khoa Tim mạch C",
+        "release_date": "Mar 2018",
+        "image": "ui/images/hospital-c.jpg",
+        "rating": 9.0,
+        "link": "https://www.example.com/hospital-c"
     },
     {
         "id": 1,
-        "title": "Jujutsu no Kaisen 2nd Season",
-        "release_date": "Jul 2023",
-        "image": "ui/images/jujutsu-kaisen.jpg",
-        "rating": 7.0
+        "title": "Bệnh viện Đa khoa D",
+        "release_date": "Jul 2022",
+        "image": "ui/images/hospital-d.jpg",
+        "rating": 8.0,
+        "link": "https://www.example.com/hospital-d"
     }
 ]

@@ -1,34 +1,102 @@
 [
     {
-        "id": 3,
-        "title": "Mononoke Hime",
-        "release_date": "Jul 1997",
-        "image": "ui/images/mononoke-hime.jpg",
-        "rating": 10.0,
-        "link": "None"
-    },
-    {
-        "id": 0,
-        "title": "Sousou no Frieren",
-        "release_date": "Sep 2023",
-        "image": "ui/images/frieren.jpg",
-        "rating": 9.0,
-        "link": "https://www.crunchyroll.com/series/GG5H5XQX4/frieren-beyond-journeys-end"
+        "id": 1,
+        "hospital": "Bệnh viện Đa khoa A",
+        "doctor": "BS. Nguyễn Văn An",
+        "time": "08:30",
+        "date": "2025-08-15",
+        "price": 500000,
+        "image": "ui/images/hospital-a.jpg",
+        "link": "https://www.example.com/hospital-a"
     },
     {
         "id": 2,
-        "title": "One Piece",
-        "release_date": "Oct 1999",
-        "image": "ui/images/one-piece.jpg",
-        "rating": 8.0,
-        "link": "https://www.crunchyroll.com/series/GRMG8ZQZR/one-piece"
+        "hospital": "Bệnh viện Nhi đồng B",
+        "doctor": "BS. Trần Thị Hoa",
+        "time": "09:00",
+        "date": "2025-08-16",
+        "price": 300000,
+        "image": "ui/images/hospital-b.jpg",
+        "link": "https://www.example.com/hospital-b"
     },
     {
-        "id": 1,
-        "title": "Jujutsu no Kaisen 2nd Season",
-        "release_date": "Jul 2023",
-        "image": "ui/images/jujutsu-kaisen.jpg",
-        "rating": 7.0,
-        "link": "https://www.crunchyroll.com/series/GRDV0019R/jujutsu-kaisen"
+        "id": 3,
+        "hospital": "Bệnh viện Chuyên khoa Tim mạch C",
+        "doctor": "PGS.TS. Lê Quang Minh",
+        "time": "10:15",
+        "date": "2025-08-16",
+        "price": 700000,
+        "image": "ui/images/hospital-c.jpg",
+        "link": "https://www.example.com/hospital-c"
+    },
+    {
+        "id": 4,
+        "hospital": "Bệnh viện Đa khoa D",
+        "doctor": "BS. Phạm Thị Lan",
+        "time": "14:00",
+        "date": "2025-08-17",
+        "price": 450000,
+        "image": "ui/images/hospital-d.jpg",
+        "link": "https://www.example.com/hospital-d"
+    },
+    {
+        "id": 5,
+        "hospital": "Bệnh viện Đa khoa A",
+        "doctor": "BS. Đỗ Hữu Tài",
+        "time": "15:30",
+        "date": "2025-08-17",
+        "price": 600000,
+        "image": "ui/images/hospital-a.jpg",
+        "link": "https://www.example.com/hospital-a"
+    },
+    {
+        "id": 6,
+        "hospital": "Bệnh viện Nhi đồng B",
+        "doctor": "BS. Lê Hồng Sơn",
+        "time": "08:00",
+        "date": "2025-08-18",
+        "price": 350000,
+        "image": "ui/images/hospital-b.jpg",
+        "link": "https://www.example.com/hospital-b"
+    },
+    {
+        "id": 7,
+        "hospital": "Bệnh viện Chuyên khoa Tim mạch C",
+        "doctor": "GS. Nguyễn Văn Hùng",
+        "time": "13:45",
+        "date": "2025-08-18",
+        "price": 800000,
+        "image": "ui/images/hospital-c.jpg",
+        "link": "https://www.example.com/hospital-c"
+    },
+    {
+        "id": 8,
+        "hospital": "Bệnh viện Đa khoa D",
+        "doctor": "BS. Nguyễn Thị Yến",
+        "time": "09:20",
+        "date": "2025-08-19",
+        "price": 400000,
+        "image": "ui/images/hospital-d.jpg",
+        "link": "https://www.example.com/hospital-d"
+    },
+    {
+        "id": 9,
+        "hospital": "Bệnh viện Đa khoa A",
+        "doctor": "BS. Vũ Văn Khánh",
+        "time": "16:00",
+        "date": "2025-08-19",
+        "price": 550000,
+        "image": "ui/images/hospital-a.jpg",
+        "link": "https://www.example.com/hospital-a"
+    },
+    {
+        "id": 10,
+        "hospital": "Bệnh viện Chuyên khoa Tim mạch C",
+        "doctor": "BS. Đặng Thị Thu",
+        "time": "11:10",
+        "date": "2025-08-20",
+        "price": 750000,
+        "image": "ui/images/hospital-c.jpg",
+        "link": "https://www.example.com/hospital-c"
     }
 ]

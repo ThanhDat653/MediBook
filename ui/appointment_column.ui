@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AnimeColumn</class>
- <widget class="QWidget" name="AnimeColumn">
+ <class>AppointmentColumn</class>
+ <widget class="QWidget" name="AppointmentColumn">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QFrame" name="animeCol">
+    <widget class="QFrame" name="appointmentCol">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -39,7 +39,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="animeView">
+       <widget class="QLabel" name="appointmentView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -70,7 +70,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="animeTitle">
+       <widget class="QLabel" name="appointmentTitle">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -95,7 +95,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="animeInfo">
+       <widget class="QLabel" name="appointmentInfo">
         <property name="font">
          <font>
           <pointsize>10</pointsize>

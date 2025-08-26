@@ -1,20 +1,36 @@
 import operator
 from datetime import datetime
+import json
+import os
 
-from app.data_io import load_json_data, write_json_data
+# Thay thế import từ data_io bằng hàm trực tiếp
+def load_json_data():
+    """Load data from JSON file"""
+    try:
+        with open('appointments.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+def write_json_data(data):
+    """Write data to JSON file"""
+    with open('appointments.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
-class AnimeItem:
-    def __init__(self, anime_id, title, release_date, image=None, rating=None, link=None):
-        self.id = anime_id
-        self.title = title
-        self.release_date = release_date
+class AppointmentItem:
+    def __init__(self, appointment_id, hospital, doctor, time, date, price=None, image=None, link=None):
+        self.id = appointment_id
+        self.hospital = hospital
+        self.doctor = doctor
+        self.time = time
+        self.date = date
+        self.price = float(price) if price else None
         self.image = image
-        self.rating = float(rating)
         self.link = link
 
     def __str__(self):
-        return f"{self.title}\t{self.release_date}\t{bool(self.image)}\t{self.rating}\t{self.link}"
+        return f"{self.hospital}\t{self.doctor}\t{self.time}\t{self.date}\t{self.price}\t{bool(self.image)}\t{self.link}"
     
     def update(self, new_data):
         # Empty field is not updated
@@ -23,92 +39,151 @@ class AnimeItem:
                 setattr(self, k, v)
 
 
-class AnimeDatabase:
+class AppointmentDatabase:
     def __init__(self):
-        self.anime_item_list = list()
-        self.anime_dict_data = load_json_data()
-        self.anime_title_list = self.get_title_list()
+        self.appointment_item_list = list()
+        self.appointment_dict_data = load_json_data()
+        self.load_data()
     
     def item_to_data(self):
         json_data = list()
-        for anime in self.anime_item_list:
-            json_data.append(anime.__dict__)
+        for appointment in self.appointment_item_list:
+            json_data.append({
+                "id": appointment.id,
+                "hospital": appointment.hospital,
+                "doctor": appointment.doctor,
+                "time": appointment.time,
+                "date": appointment.date,
+                "price": appointment.price,
+                "image": appointment.image,
+                "link": appointment.link
+            })
         return json_data
 
     def load_data(self):
-        for anime_dict in self.anime_dict_data:
-            anime = AnimeItem(anime_id=anime_dict["id"],
-                          title=anime_dict["title"],
-                          release_date=anime_dict["release_date"],
-                          image=anime_dict["image"],
-                          rating=anime_dict["rating"],
-                          link=anime_dict["link"])
-            self.anime_item_list.append(anime)
+        self.appointment_item_list.clear()
+        for appointment_dict in self.appointment_dict_data:
+            appointment = AppointmentItem(
+                appointment_id=appointment_dict["id"],
+                hospital=appointment_dict["hospital"],
+                doctor=appointment_dict["doctor"],
+                time=appointment_dict["time"],
+                date=appointment_dict["date"],
+                price=appointment_dict.get("price"),
+                image=appointment_dict.get("image"),
+                link=appointment_dict.get("link")
+            )
+            self.appointment_item_list.append(appointment)
 
-    def get_item_by_title(self, anime_title) -> AnimeItem:
-        for anime_item in self.anime_item_list:
-            if anime_item.title == anime_title:
-                return anime_item
+    def get_item_by_id(self, item_id) -> AppointmentItem:
+        for appointment_item in self.appointment_item_list:
+            if appointment_item.id == item_id:
+                return appointment_item
+        return None
 
-    def add_item_from_dict(self, anime_dict):
-        anime_dict["id"] = len(self.anime_item_list)
-        new_item = AnimeItem(anime_id=anime_dict["id"],
-                             title=anime_dict["title"],
-                             release_date=anime_dict["release_date"],
-                             image=anime_dict["image"],
-                             rating=anime_dict["rating"],
-                             link=anime_dict["link"])
-        self.anime_item_list.append(new_item)
-        self.anime_dict_data.append(anime_dict)
-        write_json_data(self.anime_dict_data)
-    
-    def edit_item_from_dict(self, edit_title, anime_dict: AnimeItem):
-        anime_edit = self.get_item_by_title(edit_title)
-        anime_edit.update(anime_dict)
-        self.anime_dict_data = self.item_to_data()
-        write_json_data(self.anime_dict_data)
-    
-    def delete_item(self, delete_title):
-        anime_delete = self.get_item_by_title(delete_title)
-        self.anime_item_list.remove(anime_delete)
-        self.anime_dict_data = self.item_to_data()
-        write_json_data(self.anime_dict_data)
-    
-    def search_by_title(self, search_title) -> list[AnimeItem]:
+    def get_items_by_hospital(self, hospital_name) -> list[AppointmentItem]:
         matched_items = []
-        for anime_item in self.anime_item_list:
-            if search_title in anime_item.title:
-                matched_items.append(anime_item)
+        for appointment_item in self.appointment_item_list:
+            if hospital_name.lower() in appointment_item.hospital.lower():
+                matched_items.append(appointment_item)
         return matched_items
 
-    def sort_item_by_rating(self, top=None):
-        self.anime_item_list = sorted(self.anime_item_list, 
-                                      key=operator.attrgetter('rating'),
-                                      reverse=True
-                                      )
-        if top:
-            return self.anime_item_list[top]
+    def add_item_from_dict(self, appointment_dict):
+        # Tạo ID mới dựa trên ID cao nhất hiện có + 1
+        max_id = max([item.id for item in self.appointment_item_list]) if self.appointment_item_list else -1
+        appointment_dict["id"] = max_id + 1
+        
+        new_item = AppointmentItem(
+            appointment_id=appointment_dict["id"],
+            hospital=appointment_dict["hospital"],
+            doctor=appointment_dict["doctor"],
+            time=appointment_dict["time"],
+            date=appointment_dict["date"],
+            price=appointment_dict.get("price"),
+            image=appointment_dict.get("image"),
+            link=appointment_dict.get("link")
+        )
+        self.appointment_item_list.append(new_item)
+        self.appointment_dict_data = self.item_to_data()
+        write_json_data(self.appointment_dict_data)
     
-    def sort_item_by_title(self, top=None):
-        self.anime_item_list = sorted(self.anime_item_list, 
-                                      key=operator.attrgetter('title')
-                                      )
+    def edit_item_from_dict(self, item_id, appointment_dict):
+        appointment_edit = self.get_item_by_id(item_id)
+        if appointment_edit:
+            appointment_edit.update(appointment_dict)
+            self.appointment_dict_data = self.item_to_data()
+            write_json_data(self.appointment_dict_data)
+            return True
+        return False
+    
+    def delete_item(self, item_id):
+        appointment_delete = self.get_item_by_id(item_id)
+        if appointment_delete:
+            self.appointment_item_list.remove(appointment_delete)
+            self.appointment_dict_data = self.item_to_data()
+            write_json_data(self.appointment_dict_data)
+            return True
+        return False
+    
+    def search_by_hospital(self, search_hospital) -> list[AppointmentItem]:
+        matched_items = []
+        for appointment_item in self.appointment_item_list:
+            if search_hospital.lower() in appointment_item.hospital.lower():
+                matched_items.append(appointment_item)
+        return matched_items
+
+    def sort_item_by_price(self, top=None):
+        # Sắp xếp theo price, items không có price sẽ ở cuối
+        sorted_list = sorted(
+            self.appointment_item_list, 
+            key=lambda x: (x.price is None, x.price),
+            reverse=False
+        )
         if top:
-            return self.anime_item_list[top]
+            return sorted_list[:top]
+        return sorted_list
     
     def sort_item_by_date(self, top=None):
-        self.anime_item_list = sorted(self.anime_item_list, 
-                                      key=lambda x: format_date(x.release_date),
-                                      reverse=True)
+        # Sắp xếp theo date, xử lý các định dạng date khác nhau
+        def parse_date(date_str):
+            try:
+                # Thử các định dạng date phổ biến
+                for fmt in ('%b %Y', '%d/%m/%Y', '%Y-%m-%d', '%m/%d/%Y'):
+                    try:
+                        return datetime.strptime(date_str, fmt)
+                    except ValueError:
+                        continue
+                return datetime.min  # Nếu không parse được, đặt ở đầu
+            except:
+                return datetime.min
+        
+        sorted_list = sorted(
+            self.appointment_item_list, 
+            key=lambda x: parse_date(x.date),
+            reverse=True
+        )
         if top:
-            return self.anime_item_list[top]
+            return sorted_list[:top]
+        return sorted_list
     
-    def get_title_list(self):
-        titles = [anime["title"] for anime in self.anime_dict_data]
-        return titles
+    def get_hospital_list(self):
+        hospitals = list(set([appointment.hospital for appointment in self.appointment_item_list]))
+        return sorted(hospitals)
+
 
 def format_date(date_text):
-    return datetime.strptime(date_text, '%b %Y')
+    """Chuyển date text thành datetime object"""
+    try:
+        for fmt in ('%b %Y', '%d/%m/%Y', '%Y-%m-%d', '%m/%d/%Y'):
+            try:
+                return datetime.strptime(date_text, fmt)
+            except ValueError:
+                continue
+        return datetime.min
+    except:
+        return datetime.mins
 
-def date_to_text(date:datetime):
+
+def date_to_text(date: datetime):
+    """Chuyển datetime object thành text theo format chuẩn"""
     return date.strftime("%b %Y")

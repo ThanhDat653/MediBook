@@ -3,10 +3,11 @@ import os
 
 class Config():
     LOCAL_DIR = os.getcwd()
-    UI_DIR = os.path.join(LOCAL_DIR, "ui")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    UI_DIR = os.path.join(BASE_DIR, "ui")
 
-    JSON_PATH = 'data/data.json'
-    
+    JSON_PATH = os.path.join(BASE_DIR, "data", "data.json")
+        
     MENU_COLLAPSED_WIDTH = 50
     MENU_FULL_WIDTH = 150
     TOGGLE_ANIMATION_DURATION = 500
