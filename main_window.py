@@ -1,7 +1,7 @@
 import os
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QHBoxLayout
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QHBoxLayout, QListWidgetItem
 from PyQt6.QtCore import QPropertyAnimation, QEasingCurve, Qt
 from PyQt6.QtGui import QPixmap, QIcon
 
@@ -54,7 +54,10 @@ class MainWindow(QMainWindow):
 
     def setup_CRUD_page(self):
         self.database.load_data()
-        self.widgets.appointmentList.addItems(self.database.appointment_item_list)
+        # Nếu chỉ cần text:
+        self.widgets.appointmentList.addItems(
+            [f"{item.hospital} - {item.doctor} - {item.time}" for item in self.database.appointment_item_list]
+        )
         self.widgets.appointmentList.setCurrentRow(0)
         self.widgets.addButton.clicked.connect(lambda: self.crud_handler.add())
         self.widgets.editButton.clicked.connect(lambda: self.crud_handler.edit())
@@ -191,7 +194,13 @@ class AppointmentHorizontalLayout():
         self.h_layout = main_window.horizontal_layout
 
     def display_layout(self):
+        print("display_layout called")
+        print("Number of appointments:", len(self.database.appointment_item_list))
+        self.clear_layout()
+        if not self.database.appointment_item_list:
+            print("No appointments loaded!")
         for appointment in self.database.appointment_item_list:
+            print("Adding appointment:", appointment)
             appointment_item_widget = AppointmentItemWidget(appointment)
             self.h_layout.addWidget(appointment_item_widget)
         self.widgets.appointmentListWidget.setLayout(self.h_layout)

@@ -19,7 +19,10 @@ class AppointmentItemWidget(QWidget):
     UI_LOCATION = os.path.join(Config.UI_DIR, "appointment_column.ui")
     
     def __init__(self, appointment: AppointmentItem):
+        print("STYLE_LOCATION:", self.STYLE_LOCATION)
+        print("File exists:", os.path.exists(self.STYLE_LOCATION))
         super().__init__()  # Use super() instead of QWidget.__init__()
+        print(appointment)
         try:
             self.ui = uic.loadUi(self.UI_LOCATION, self)
         except FileNotFoundError:
@@ -48,7 +51,7 @@ class AppointmentItemWidget(QWidget):
                           f"Specialty: {self.appointment.date}\n" \
                           f"Price: {str(self.appointment.price)}/10"
         img_pixmap = QPixmap(self.appointment.image)
-        self.ui.appointmentTitle.setText(self.appointment.name)
+        self.ui.appointmentTitle.setText(self.appointment.doctor)
         self.ui.appointmentInfo.setText(description_text)
         self.ui.appointmentView.setPixmap(img_pixmap.scaled(
             self.ui.appointmentView.size(), 
